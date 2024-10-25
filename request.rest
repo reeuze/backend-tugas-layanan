@@ -1,0 +1,14 @@
+###
+GET http://localhost:5000/images
+
+###
+GET http://localhost:5000/tags
+
+###
+GET http://localhost:5000/users/10
+
+###
+GET http://localhost:5000/images/2
+
+###
+GET http://localhost:5000/tags/1
