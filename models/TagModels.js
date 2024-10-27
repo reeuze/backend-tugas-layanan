@@ -1,10 +1,10 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
-import Image from "./ImageModels.js";
+import image from "./ImageModels.js";
 
 const {DataTypes} = Sequelize;
 
-const Tag = db.define("Tag", {
+const tag = db.define("tag", {
     tagId : {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,22 +13,12 @@ const Tag = db.define("Tag", {
     name : {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    imageId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Image,
-            key: 'imageId'
-        }
     }
 },{
     freezeTableName:true
 });
 
-// Image.hasMany(Tag, { foreignKey: 'imageId' });
-// Tag.belongsTo(Image, { foreignKey: 'imageId' });
-
-export default Tag;
+export default tag;
 
 (async()=>{
     await db.sync();

@@ -5,7 +5,7 @@ import cors from 'cors';
 import Image from './routes/ImageRoutes.js';
 import Tag from './routes/TagRoutes.js';
 import User from './routes/UserRoutes.js';
-// import ImageTag from './models/ImageTagRelation.js';
+import ImageTag from './models/ImageTagRelation.js';
 
 const app = express();
 app.use(cors());
@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(Image);
 app.use(Tag);
 app.use(User);
+app.use(ImageTag);
 
 app.listen(5000, () => console.log('Server is running on port 5000'));
 

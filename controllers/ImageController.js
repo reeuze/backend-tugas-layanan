@@ -1,5 +1,6 @@
 import Image from '../models/ImageModels.js';
 import Tag from "../models/TagModels.js";
+import ImageTag from '../models/ImageTagRelation.js';
 
 export const getImages = async(req, res) => {
     try {
@@ -12,12 +13,33 @@ export const getImages = async(req, res) => {
 
 export const getImagesById = async(req, res) =>{
     try {
-        const response = await Image.findOne({
-            where:{
-                imageId: req.params.id
+        const ID = req.params.id
+
+        const image = await Image.findOne({
+            where: {
+                imageId: ID
             }
         });
-        res.status(200).json(response);
+
+        const tags = await ImageTag.findAll({
+            where: {
+                imageId: ID
+            },
+            attributes: ['tagId']
+        });
+
+        const tagIds = tags.map(tag => tag.tagId);
+
+        const tagDetails = await Tag.findAll({
+            where: {
+                tagId: tagIds
+            }
+        });
+
+        res.status(200).json({ 
+            image: image.toJSON(), 
+            tags: tagDetails
+        });
     } catch (error) {
         console.log(error.message);
     }

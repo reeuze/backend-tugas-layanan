@@ -1,10 +1,10 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
-import User from './UserModels.js';
+import user from './UserModels.js';
 
 const {DataTypes} = Sequelize;
 
-const Image = db.define("Image", {
+const image = db.define("image", {
     imageId : {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -25,7 +25,7 @@ const Image = db.define("Image", {
     userId: {
         type: DataTypes.INTEGER,
         references: {
-            model: User,
+            model: user,
             key: 'userId'
         }
     }
@@ -33,10 +33,10 @@ const Image = db.define("Image", {
     freezeTableName:true
 });
 
-Image.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Image, { foreignKey: 'userId' });
+image.belongsTo(user, { foreignKey: 'userId' });
+user.hasMany(image, { foreignKey: 'userId' });
 
-export default Image;
+export default image;
 
 (async()=>{
     await db.sync();
