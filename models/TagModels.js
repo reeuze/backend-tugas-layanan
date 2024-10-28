@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
-import image from "./ImageModels.js";
 
 const {DataTypes} = Sequelize;
 

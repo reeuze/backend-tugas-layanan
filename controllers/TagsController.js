@@ -53,3 +53,16 @@ export const createTags = async(req, res) => {
         console.log(error.message);
     }
 }
+
+export const deleteTags = async(req, res) => {
+    try {
+        await Tag.destroy({
+            where:{
+                tagId: req.params.id
+            }
+        });
+        res.status(200).json({msg: "User Deleted"});
+    } catch (error) {
+        console.log(error.message);
+    }
+}
