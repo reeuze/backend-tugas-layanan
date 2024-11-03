@@ -69,6 +69,7 @@ export const getUsersById = async(req, res) =>{
     }
 }
 
+/*
 export const createUsers = async(req, res) =>{
     try {
         const { name, email, password, imageId } = req.body;
@@ -76,6 +77,26 @@ export const createUsers = async(req, res) =>{
             name,
             email,
             password,
+            ImageId: imageId
+        });
+        res.status(201).json({ message: 'User created', user });
+    } catch (error) {
+        console.log(error.message);
+    }
+}*/
+
+export const createUsers = async(req, res) =>{
+    try {
+        const { name, email, password, imageId } = req.body;
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email already registered' });
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await User.create({
+            name,
+            email,
+            password: hashedPassword,
             ImageId: imageId
         });
         res.status(201).json({ message: 'User created', user });
