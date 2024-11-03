@@ -1,4 +1,3 @@
-const memUsageBefore = process.memoryUsage();
 import express from "express";
 import {
     getUsers,
@@ -17,7 +16,3 @@ router.patch('/users/:id', updateUsers);
 router.delete('/users/:id', deleteUsers);
 
 export default router;
-
-const memUsageAfter = process.memoryUsage();
-console.log('Before:', memUsageBefore);
-console.log('After:', memUsageAfter);

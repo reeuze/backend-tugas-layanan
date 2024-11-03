@@ -1,11 +1,14 @@
 ###
+GET http://localhost:5000/users
+
+###
 GET http://localhost:5000/images
 
 ###
 GET http://localhost:5000/tags
 
 ###
-GET http://localhost:5000/users/10
+GET http://localhost:5000/users/12
 
 ###
 GET http://localhost:5000/images/3
@@ -21,7 +24,38 @@ Content-Type: application/json
     "name": "Robotics"
 }
 
+###
+POST http://localhost:5000/users
+Content-Type: application/json
 
+{
+    "name": "Bobby-Fischer",
+    "email": "bobby@fischer.com",
+    "password": "bobby-pass"
+}
+
+###
+POST http://localhost:5000/images
+Content-Type: application/json
+
+{
+    "name": "Image 14-1",
+    "description": "deskripsi untuk gambar 1 miliki bobby",
+    "path": "link-image-14-1.jpg",
+}
+
+###
+PATCH http://localhost:5000/users/12
+Content-Type: application/json
+
+{
+    "name": "pragnanandha",
+    "email": "pragnanandha@gmail.com",
+    "password": "pragnanandha-pass"
+}
+
+###
+DELETE http://localhost:5000/users/12
 
 ###
 DELETE http://localhost:5000/tags/6
