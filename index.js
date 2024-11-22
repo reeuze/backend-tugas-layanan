@@ -1,4 +1,4 @@
-const memUsageBefore = process.memoryUsage();
+// const memUsageBefore = process.memoryUsage();
 import express from 'express';
 import cors from 'cors';
 
@@ -18,8 +18,8 @@ app.use(User);
 app.use(ImageTag);
 app.use(Authorized);
 
-app.listen(5000, () => console.log('Server is running on port 5000'));
+app.listen(4000, () => console.log('Server is running on port 4000'));
 
-const memUsageAfter = process.memoryUsage();
-console.log('Before:', memUsageBefore);
-console.log('After:', memUsageAfter);
+// const memUsageAfter = process.memoryUsage();
+// console.log('Before:', memUsageBefore);
+// console.log('After:', memUsageAfter);

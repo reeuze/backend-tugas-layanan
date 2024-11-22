@@ -1,70 +1,86 @@
 ###
-GET http://localhost:5000/users
+GET http://localhost:4000/users
 
 ###
-GET http://localhost:5000/images
+GET http://localhost:4000/images
 
 ###
-GET http://localhost:5000/tags
+GET http://localhost:4000/tags
 
 ###
-GET http://localhost:5000/users/12
+GET http://localhost:4000/users/10
 
 ###
-GET http://localhost:5000/images/3
+GET http://localhost:4000/images/3
 
 ###
-GET http://localhost:5000/tags/1
+GET http://localhost:4000/tags/1
 
 ###
-POST http://localhost:5000/tags
+POST http://localhost:4000/tags
 Content-Type: application/json
 
 {
-    "name": "Robotics"
+    "name": "Mecha"
 }
 
 ###
-POST http://localhost:5000/users
+POST http://localhost:4000/users
 Content-Type: application/json
 
 {
-    "name": "Bobby-Fischer",
-    "email": "bobby@fischer.com",
-    "password": "bobby-pass"
+    "name": "another-example",
+    "email": "example@gmail.com",
+    "password": "example-pass",
+    "birthdate": "02/11/2024",
+    "gender": "male",
+    "phone": "081234567890",
+    "url_profile" : "https://example.com/profile/bobby-fischer"
 }
 
 ###
-POST http://localhost:5000/images
+POST http://localhost:4000/images
 Content-Type: application/json
 
 {
     "name": "Image 14-1",
-    "description": "deskripsi untuk gambar 1 miliki bobby",
+    "description": "deskripsi test",
     "path": "link-image-14-1.jpg",
 }
 
 ###
-PATCH http://localhost:5000/users/12
+PATCH http://localhost:4000/users/12
 Content-Type: application/json
 
 {
     "name": "pragnanandha",
     "email": "pragnanandha@gmail.com",
-    "password": "pragnanandha-pass"
+    "password": "pragnanandha-pass",
+    "brithdate": "02/11/2024",
+    "gender": "male",
+    "phone": "081234567890",
 }
 
 ###
-DELETE http://localhost:5000/users/12
+DELETE http://localhost:4000/users/12
 
 ###
-DELETE http://localhost:5000/tags/6
+DELETE http://localhost:4000/tags/6
 
 ###
-POST  http://localhost:5000/login
+POST http://localhost:4000/login
 Content-Type: application/json
 
 {
     "email": "user1@example.com",
     "password": "user1pass"
+}
+
+###
+POST  http://localhost:4000/signup
+Content-Type: application/json
+
+{
+    "email": "admin_email",
+    "password": "admin_pass"
 }

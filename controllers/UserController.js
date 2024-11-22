@@ -1,52 +1,72 @@
-// import bcrypt from 'bcrypt';
-// import jwt from 'jsonwebtoken';
-
 // import upload from "../config/multerConfig.js";
 
 import User from '../models/UserModels.js';
 import Image from '../models/ImageModels.js';
+import user from '../models/UserModels.js';
 // import Tag from '../models/TagModels.js';
 
-// export const LoginUser = async(req, res) => {
-//     const { email, password } = req.body;
-//     try {
-//         const user = await User.findOne({ where: { email } });
-//         if (!user) {
-//             return res.status(404).json({ message: 'User not found' });
-//         }
-//         const isPasswordValid = await bcrypt.compare(password, user.password);
-//         if (!isPasswordValid) {
-//             return res.status(401).json({ message: 'Password is incorrect' });
-//         }
-// 
-//         const token = jwt.sign(
-//             { userId: user.id, email: user.email }, // Payload token
-//             'secret_key', // Ganti dengan secret key yang lebih aman
-//             { expiresIn: '1h' } // Token berlaku selama 1 jam
-//         );
-// 
-//         // Kirim response sukses dan token
-//         res.status(200).json({
-//             message: 'Login successful',
-//             token: token,
-//             user: {
-//                 id: user.id,
-//                 name: user.name,
-//                 email: user.email
-//             }
-//         });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: 'Server error', error });
-//     }
-// }
+export const LoginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
+        }
+
+        const stage_1 = await User.findOne({ 
+            where: {
+                email: email,
+            }
+        });
+
+        if (!stage_1) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        const stage_2 = await User.findOne({ 
+            where: {
+                password: password,
+            }
+        });
+
+        if ( stage_1.userId !== stage_2.userId ) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+        else {
+            return res.status(200).json({ id: stage_2.userId });
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
+
+export const SignupUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const check_email = await User.findOne({
+            where: { 
+                email: email
+            }
+        });
+
+        if (check_email) {
+            return res.status(400).json({ message: 'Email already registered' });
+        }
+        
+        return res.status(201).json({ message: 'User created' });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
 
 export const getUsers = async(req, res) =>{
     try {
         const response = await User.findAll();
         res.status(200).json(response);
     } catch (error) {
-        console.log(error.message);
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -61,49 +81,48 @@ export const getUsersById = async(req, res) =>{
                 model: Image,
                 where: {userId: ID},
                 attributes: ['imageId', 'name', 'path'],
+                required: false,
             }]
         });
         res.status(200).json(response);
     } catch (error) {
-        console.log(error.message);
+        return res.status(500).json({ error: error.message });
     }
 }
 
-/*
 export const createUsers = async(req, res) =>{
     try {
-        const { name, email, password, imageId } = req.body;
+        const { name, email, password } = req.body;
         const user = await User.create({
             name,
             email,
-            password,
-            ImageId: imageId
+            password
         });
         res.status(201).json({ message: 'User created', user });
     } catch (error) {
-        console.log(error.message);
-    }
-}*/
-
-export const createUsers = async(req, res) =>{
-    try {
-        const { name, email, password, imageId } = req.body;
-        const existingUser = await User.findOne({ where: { email } });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Email already registered' });
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({
-            name,
-            email,
-            password: hashedPassword,
-            ImageId: imageId
-        });
-        res.status(201).json({ message: 'User created', user });
-    } catch (error) {
-        console.log(error.message);
+        return res.status(500).json({ error: error.message });
     }
 }
+
+// export const createUsers = async(req, res) =>{
+//     try {
+//         const { name, email, password, imageId } = req.body;
+//         const existingUser = await User.findOne({ where: { email } });
+//         if (existingUser) {
+//             return res.status(400).json({ message: 'Email already registered' });
+//         }
+//         const hashedPassword = await bcrypt.hash(password, 10);
+//         const user = await User.create({
+//             name,
+//             email,
+//             password: hashedPassword,
+//             ImageId: imageId
+//         });
+//         res.status(201).json({ message: 'User created', user });
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
 
 export const updateUsers = async(req, res) =>{
     try {
@@ -115,7 +134,7 @@ export const updateUsers = async(req, res) =>{
         });
         res.status(200).json({msg: "User name Updated"});
     } catch (error) {
-        console.log(error.message);
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -128,6 +147,6 @@ export const deleteUsers = async(req, res) =>{
         });
         res.status(200).json({msg: "User Deleted"});
     } catch (error) {
-        console.log(error.message);
+        return res.status(500).json({ error: error.message });
     }
 }

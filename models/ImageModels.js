@@ -15,7 +15,7 @@ const image = db.define("image", {
         allowNull: false
     },
     description : {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: true
     },
     path : {

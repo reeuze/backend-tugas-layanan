@@ -37,8 +37,10 @@ export const getTagsById = async(req, res) =>{
         });
 
         res.status(200).json({ 
-            tag: tag.toJSON(), 
-            images: imageDetails
+            tag: {
+                ...tag.toJSON(),
+                images: imageDetails
+            }
         });
     } catch (error) {
         console.log(error.message);

@@ -15,33 +15,32 @@ const user = db.define("user", {
     },
     email : {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-        validate: {
-            isEmail: true  // Pastikan email foratnya valdi
-        }
+        allowNull: true,
+        unique: true,
     },
     password : {
         type: DataTypes.STRING,
-        allowNull: false
-         validate: {
-            len: [6, 100]  // Passwordnya minimal 6 karakter
-        }
-    }
+        allowNull: true,
+    },
+    birthdate : {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    gender : {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    phone : {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    url_profile : {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 },{
     freezeTableName:true
 });
-
-// Hook untuk melakukan hash password sebelum menyimpan ke database
-user.beforeCreate(async (user) => {
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-});
-
-// Instance method untuk verifikasi password
-user.prototype.verifyPassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
-};
 
 export default user;
 
