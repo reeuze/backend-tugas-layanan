@@ -92,11 +92,15 @@ export const getUsersById = async(req, res) =>{
 
 export const createUsers = async(req, res) =>{
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, birthDate, gender, phone, url_profile } = req.body;
         const user = await User.create({
             name,
             email,
-            password
+            password,
+            birthDate,
+            gender,
+            phone,
+            url_profile
         });
         res.status(201).json({ message: 'User created', user });
     } catch (error) {
@@ -126,8 +130,16 @@ export const createUsers = async(req, res) =>{
 
 export const updateUsers = async(req, res) =>{
     try {
-        const { name } = req.body;
-        await User.update({name: name},{
+        const { name, email, password, birthdate, gender, phone, url_profile } = req.body;
+        await User.update({
+            name,
+            email,
+            password,
+            birthdate,
+            gender,
+            phone,
+            url_profile
+        },{
             where:{
                 userId: req.params.id
             }

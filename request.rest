@@ -32,7 +32,7 @@ Content-Type: application/json
     "name": "another-example",
     "email": "example@gmail.com",
     "password": "example-pass",
-    "birthdate": "02/11/2024",
+    "birthDate": "02/11/2024",
     "gender": "male",
     "phone": "081234567890",
     "url_profile" : "https://example.com/profile/bobby-fischer"
@@ -46,23 +46,24 @@ Content-Type: application/json
     "name": "Image 14-1",
     "description": "deskripsi test",
     "path": "link-image-14-1.jpg",
+    "userId": "10"
 }
 
 ###
-PATCH http://localhost:4000/users/12
+PATCH http://localhost:4000/users/10
 Content-Type: application/json
 
 {
-    "name": "pragnanandha",
-    "email": "pragnanandha@gmail.com",
-    "password": "pragnanandha-pass",
+    "name": "user_new",
+    "email": "user1@gmail.com",
+    "password": "secret-pass",
     "brithdate": "02/11/2024",
     "gender": "male",
-    "phone": "081234567890",
+    "phone": "081234567890"
 }
 
 ###
-DELETE http://localhost:4000/users/12
+DELETE http://localhost:4000/users/18
 
 ###
 DELETE http://localhost:4000/tags/6

@@ -15,12 +15,12 @@ const image = db.define("image", {
         allowNull: false
     },
     description : {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
     },
     path : {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     userId: {
         type: DataTypes.INTEGER,

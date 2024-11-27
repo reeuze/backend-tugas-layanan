@@ -1,6 +1,11 @@
 import Image from '../models/ImageModels.js';
 import Tag from "../models/TagModels.js";
 import ImageTag from '../models/ImageTagRelation.js';
+import User from '../models/UserModels.js';
+import Upload from '../multerConfig.js';
+
+import fs from 'fs';
+import path from 'path';
 
 export const getImages = async(req, res) => {
     try {
@@ -50,6 +55,12 @@ export const getImagesById = async(req, res) =>{
 export const createImages = async(req, res) => {
     try {
         const newImage = await Image.create(req.body);
+        const filePath = req.file.path;
+        const imageId = newImage.imageId;
+        const newFileName = `${imageId}${path.extname(req.file.originalname)}`;
+        const newFilePath = path.join('./Uploads', newFileName);
+        fs.renameSync(filePath, newFilePath);
+        await newImage.update({ path: newFilePath });
         res.status(200).json(newImage);
     } catch (error) {
         console.log(error.message);
@@ -58,7 +69,7 @@ export const createImages = async(req, res) => {
 
 export const updateImages = async(req, res) => {
     try {
-        await Image.update(req.body,{
+        const UpdateImage = await Image.update(req.body,{
             where:{
                 imageId: req.params.id
             }
