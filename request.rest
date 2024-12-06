@@ -11,10 +11,10 @@ GET http://localhost:4000/tags
 GET http://localhost:4000/users/10
 
 ###
-GET http://localhost:4000/images/3
+GET http://localhost:4000/images/1
 
 ###
-GET http://localhost:4000/tags/1
+GET http://localhost:4000/tags/2
 
 ###
 POST http://localhost:4000/tags
@@ -43,10 +43,10 @@ POST http://localhost:4000/images
 Content-Type: application/json
 
 {
-    "name": "Image 14-1",
-    "description": "deskripsi test",
-    "path": "link-image-14-1.jpg",
-    "userId": "10"
+    "name": "test Image path",
+    "description": "deskripsi test image path",
+    "userId": "10",
+    "path": "15.jpg"
 }
 
 ###
@@ -63,10 +63,21 @@ Content-Type: application/json
 }
 
 ###
+PATCH http://localhost:4000/images/15
+Content-Type: application/json
+
+{
+    "path": "15.jpeg"
+}
+
+###
 DELETE http://localhost:4000/users/18
 
 ###
-DELETE http://localhost:4000/tags/6
+DELETE http://localhost:4000/images/23
+
+###
+DELETE http://localhost:4000/tags/1
 
 ###
 POST http://localhost:4000/login

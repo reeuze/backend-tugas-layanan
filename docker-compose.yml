@@ -9,6 +9,23 @@ services:
       - "4000:4000"
     volumes:
       - .:/app
-      - /app/node_modules
     environment:
-      - NODE_ENV=development
+      # - /app/node_modules
+      DB_HOST: host.docker.internal
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: layanan_db
+      NODE_ENV: development
+#     depends_on:
+#       - mysql
+# 
+#   mysql:
+#     image: mysql:8.0
+#     container_name: mysql
+#     restart: always
+#     ports:
+#       - "3306:3306"
+#     environment:
+#       MYSQL_ROOT_PASSWORD: root
+#       MYSQL_DATABASE: layanan_db

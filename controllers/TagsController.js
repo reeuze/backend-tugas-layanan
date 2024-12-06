@@ -58,13 +58,23 @@ export const createTags = async(req, res) => {
 
 export const deleteTags = async(req, res) => {
     try {
+        const transaction = await Tag.sequelize.transaction();
+        await ImageTag.destroy({
+            where:{
+                tagId: req.params.id
+            },
+            transaction
+        });
         await Tag.destroy({
             where:{
                 tagId: req.params.id
-            }
+            },
+            transaction
         });
-        res.status(200).json({msg: "User Deleted"});
+        await transaction.commit();
+        res.status(200).json({msg: "Tag Deleted"});
     } catch (error) {
+        await transaction.rollback();
         console.log(error.message);
     }
 }

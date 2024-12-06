@@ -84,8 +84,23 @@ export const getUsersById = async(req, res) =>{
                 required: false,
             }]
         });
-        res.status(200).json(response);
+        if (response.images && response.images.length > 0) {
+            response.images.forEach(image => {
+                image.imageUrl = `${req.protocol}://${req.get('host')}/view/${image.path}`;
+            });
+        }
+        const result = {
+            ...response.dataValues,
+            images: response.images.map(image => ({
+                imageId: image.imageId,
+                name: image.name,
+                path: image.path,
+                imageUrl: image.imageUrl
+            }))
+        };
+        res.status(200).json(result);
     } catch (error) {
+        console.log(error);
         return res.status(500).json({ error: error.message });
     }
 }

@@ -1,6 +1,7 @@
 // const memUsageBefore = process.memoryUsage();
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 
 import Image from './routes/ImageRoutes.js';
 import Tag from './routes/TagRoutes.js';
@@ -17,6 +18,7 @@ app.use(Tag);
 app.use(User);
 app.use(ImageTag);
 app.use(Authorized);
+app.use('/view', express.static(path.join('./Uploads')));
 
 app.listen(4000, () => console.log('Server is running on port 4000'));
 

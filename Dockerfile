@@ -5,10 +5,8 @@ FROM node:20.18.0
 WORKDIR /app
 
 # Salin file package.json dan package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-# RUN apt-get update && apt-get install -y build-essential python3
+COPY package.json ./
+COPY package-lock.json ./
 
 # Instal dependensi
 RUN npm install
