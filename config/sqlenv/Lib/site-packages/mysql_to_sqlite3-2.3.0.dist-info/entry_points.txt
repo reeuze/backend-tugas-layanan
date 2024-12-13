@@ -1,0 +1,2 @@
+[console_scripts]
+mysql2sqlite = mysql_to_sqlite3.cli:cli

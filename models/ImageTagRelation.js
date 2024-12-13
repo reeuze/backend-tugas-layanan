@@ -6,7 +6,7 @@ import tag from "../models/TagModels.js";
 
 const {DataTypes} = Sequelize;
 
-const imagetag = db.define("ImageTag", {
+const imagetag = db.define("imagetag", {
     imageId: {
         type: DataTypes.INTEGER,
         references: {
