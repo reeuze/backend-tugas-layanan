@@ -11,7 +11,7 @@ GET http://localhost:4000/tags
 GET http://localhost:4000/users/10
 
 ###
-GET http://localhost:4000/images/1
+GET http://localhost:4000/images/16
 
 ###
 GET http://localhost:4000/tags/2
@@ -63,11 +63,13 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:4000/images/15
+PATCH http://localhost:4000/images/16
 Content-Type: application/json
 
 {
-    "path": "15.jpeg"
+    "name": "jaket biru",
+    "description": "jaket biru editan buat ucits",
+    "tags": [2, 3]
 }
 
 ###
@@ -84,8 +86,8 @@ POST http://localhost:4000/login
 Content-Type: application/json
 
 {
-    "email": "user1@example.com",
-    "password": "user1pass"
+    "email": "user1@gmail.com",
+    "password": "secret-pass"
 }
 
 ###
@@ -93,6 +95,7 @@ POST  http://localhost:4000/signup
 Content-Type: application/json
 
 {
-    "email": "admin_email",
-    "password": "admin_pass"
+    "email": "uugnup@example.com",
+    "password": "test",
+    "name": "ij sign up"
 }

@@ -2,7 +2,6 @@
 
 import User from '../models/UserModels.js';
 import Image from '../models/ImageModels.js';
-import user from '../models/UserModels.js';
 // import Tag from '../models/TagModels.js';
 
 export const LoginUser = async (req, res) => {
@@ -33,7 +32,13 @@ export const LoginUser = async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         else {
-            return res.status(200).json({ id: stage_2.userId });
+            return res.status(200).json({
+                "userId": stage_2.userId,
+                "name": stage_2.name,
+                "birthdate": stage_2.birthdate,
+                "gender": stage_2.gender,
+                "phone": stage_2.phone,
+            });
         }
 
     } catch (error) {
@@ -43,7 +48,7 @@ export const LoginUser = async (req, res) => {
 
 export const SignupUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, name } = req.body;
 
         const check_email = await User.findOne({
             where: { 
@@ -54,8 +59,14 @@ export const SignupUser = async (req, res) => {
         if (check_email) {
             return res.status(400).json({ message: 'Email already registered' });
         }
-        
-        return res.status(201).json({ message: 'User created' });
+        const response = await User.create({
+            name,
+            email,
+            password
+        });
+        return res.status(201).json({ 
+            message: response
+        });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }

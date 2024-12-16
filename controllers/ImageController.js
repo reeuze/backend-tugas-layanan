@@ -2,6 +2,8 @@ import Image from '../models/ImageModels.js';
 import Tag from "../models/TagModels.js";
 import ImageTag from '../models/ImageTagRelation.js';
 
+import { Op } from "sequelize";
+
 import fs from 'fs';
 import path from 'path';
 
@@ -96,7 +98,7 @@ export const createImages = async (req, res) => {
     try {
         const { name, description, userId, tags } = req.body;
 
-        const newImage = await Image.create({ name, description, userId }, { transaction });
+        const newImage = await Image.create({ name, description, userId, tags }, { transaction });
 
         const filePath = req.file.path;
         const imageId = newImage.imageId;
