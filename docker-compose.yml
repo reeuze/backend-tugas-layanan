@@ -1,9 +1,9 @@
 services:
   app:
-    container_name: backend-kelompok-1
     build:
       context: .
       dockerfile: Dockerfile
+    image: 10.3.142.201:5000/5024221010-backend-kelompok-1:1
     ports:
       - "4000:4000"
     volumes:
