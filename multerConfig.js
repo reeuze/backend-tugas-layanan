@@ -13,11 +13,16 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage,
     fileFilter: (req, file, cb) => {
+        console.log('File original name:', file.originalname);
+
         const allowedTypes = /jpeg|jpg|png|gif/;
         const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
         const mimetype = allowedTypes.test(file.mimetype);
 
-        if (extname && mimetype) {
+        console.log('File mime type:', file.mimetype);
+        console.log('File extension:', path.extname(file.originalname).toLowerCase());
+
+        if (extname) {
             cb(null, true);
         } else {
             cb(new Error('Only images are allowed!'));

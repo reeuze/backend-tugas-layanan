@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Salin file package.json dan package-lock.json
 COPY package.json ./
-COPY package-lock.json ./
+# COPY package-lock.json ./
 
 # Instal dependensi
 RUN npm install
@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 4000
 
 # Perintah untuk menjalankan aplikasi
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
