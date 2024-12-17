@@ -14,6 +14,9 @@ RUN npm install
 # Salin kode aplikasi ke dalam container
 COPY . .
 
+# Buat folder Uploads di dalam container
+# RUN mkdir -p /app/Uploads /app/data
+
 # Expose port aplikasi
 EXPOSE 4000
 

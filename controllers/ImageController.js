@@ -2,8 +2,6 @@ import Image from '../models/ImageModels.js';
 import Tag from "../models/TagModels.js";
 import ImageTag from '../models/ImageTagRelation.js';
 
-import { Op } from "sequelize";
-
 import fs from 'fs';
 import path from 'path';
 
@@ -95,14 +93,9 @@ export const getImagesById = async(req, res) =>{
 
 export const uploadImages = async (req, res) => {
     try {
-
         const filePath = req.file.path;
-        const newFileName = req.file.originalname;
-        const newFilePath = path.join('./Uploads', newFileName);
-        fs.renameSync(filePath, newFilePath);
-
         res.status(201).json({
-            path: newFilePath
+            imageUrl: `${req.protocol}://${req.get('host')}/view/${path.basename(filePath)}`
         });
     } catch (error) {
         console.log(error.message);
@@ -220,8 +213,8 @@ export const deleteImages = async (req, res) => {
             return res.status(404).json({ message: "Image not found" });
         }
 
-        if (fs.existsSync("./Uploads/" + image.path)) {
-            fs.unlinkSync("./Uploads/" + image.path);
+        if (fs.existsSync("./app/Uploads/" + image.path)) {
+            fs.unlinkSync("./app/Uploads/" + image.path);
         }
 
         await ImageTag.destroy({ where: { imageId: ID }, transaction });

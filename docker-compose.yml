@@ -3,12 +3,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: 10.3.142.201:5000/5024221010-backend-kelompok-1:1
+    image: 10.3.142.201:5000/5024221010-backend-kelompok-1:2
     ports:
       - "4000:4000"
     volumes:
       - .:/app
       - /app/node_modules
+      # - /Uploads:/app/Uploads
+      # - /config/database.sqlite:/app/config/database.sqlite
     command: "npm start"
     environment:
       NODE_ENV: development
+
+# volumes:
+#   uploads: 
+#   sqlite-data:
