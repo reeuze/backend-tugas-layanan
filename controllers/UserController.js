@@ -74,7 +74,9 @@ export const SignupUser = async (req, res) => {
 
 export const getUsers = async(req, res) =>{
     try {
-        const response = await User.findAll();
+        const response = await User.findAll({
+            attributes: ['userId', 'name', 'email', 'birthDate', 'gender', 'phone']
+        });
         res.status(200).json(response);
     } catch (error) {
         return res.status(500).json({ error: error.message });
