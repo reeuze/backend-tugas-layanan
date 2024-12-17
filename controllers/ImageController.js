@@ -93,34 +93,80 @@ export const getImagesById = async(req, res) =>{
     }
 }
 
-export const createImages = async (req, res) => {
-    const transaction = await Image.sequelize.transaction();
+export const uploadImages = async (req, res) => {
     try {
-        const { name, description, userId, tags } = req.body;
-
-        const newImage = await Image.create({ name, description, userId, tags }, { transaction });
 
         const filePath = req.file.path;
-        const imageId = newImage.imageId;
-        const newFileName = `${imageId}${path.extname(req.file.originalname)}`;
+        const newFileName = req.file.originalname;
         const newFilePath = path.join('./Uploads', newFileName);
         fs.renameSync(filePath, newFilePath);
 
-        await newImage.update({ path: newFileName }, { transaction });
+        res.status(201).json({
+            path: newFilePath
+        });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: error.message });   
+    }
+}
 
+
+export const createImages = async (req, res) => {
+    let transaction; // Deklarasi transaksi di luar try
+
+    try {
+        console.log("Inside createImages");
+        const { name, description, userId, tags, path } = req.body;
+        console.log(req.body);
+
+        // 1. Mulai transaksi
+        transaction = await Image.sequelize.transaction();
+        console.log("Starting transaction...");
+
+        // 2. Buat New Image di dalam transaksi
+        const Newimage = await Image.create(
+            {
+                name,
+                description,
+                userId,
+                path
+            },
+            { transaction } // Sertakan transaksi
+        );
+        console.log("New image created:", Newimage);
+
+        // 3. Tambahkan tags jika ada
         if (tags && Array.isArray(tags)) {
             const tagRelations = tags.map(tagId => ({
-                imageId,
-                tagId
+                imageId: Newimage.imageId, // Gunakan ID dari Newimage
+                tagId,
             }));
             await ImageTag.bulkCreate(tagRelations, { transaction });
+            console.log("Tags inserted:", tagRelations);
         }
 
+        // 4. Commit transaksi
         await transaction.commit();
-        res.status(201).json(newImage);
+        console.log("Transaction committed.");
+
+        // 5. Response berhasil
+        res.status(200).json({
+            name: Newimage.name,
+            description: Newimage.description,
+            userId: Newimage.userId,
+            imageUrl: `${req.protocol}://${req.get('host')}/view/${Newimage.path}`,
+            tags: tags || []
+        });
+
     } catch (error) {
-        await transaction.rollback();
-        console.log(error.message);
+        // Rollback jika transaksi ada
+        if (transaction) {
+            await transaction.rollback();
+            console.error("Transaction rolled back.");
+        }
+
+        // Tampilkan error
+        console.error("Error creating image:", error.message);
         res.status(500).json({ message: error.message });
     }
 };

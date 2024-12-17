@@ -45,8 +45,9 @@ Content-Type: application/json
 {
     "name": "test Image path",
     "description": "deskripsi test image path",
-    "userId": "10",
-    "path": "15.jpg"
+    "userId": "14",
+    "path": "Uploads/fe0ea6ce-25e9-49af-9b73-bcccb7592c0b.jpg",
+    "tags": [2, 3]
 }
 
 ###
@@ -54,11 +55,10 @@ PATCH http://localhost:4000/users/10
 Content-Type: application/json
 
 {
-    "name": "user_new",
-    "email": "user1@gmail.com",
-    "password": "secret-pass",
-    "brithdate": "02/11/2024",
-    "gender": "male",
+    "name": "test_updayte",
+    "email": "test_update@gmail.com",
+    "brithdate": "02/11/2000",
+    "gender": "female",
     "phone": "081234567890"
 }
 

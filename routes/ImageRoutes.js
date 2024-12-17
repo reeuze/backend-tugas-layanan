@@ -3,6 +3,7 @@ import {
     viewImage,
     getImages,
     getImagesById,
+    uploadImages,
     createImages,
     updateImages,
     deleteImages
@@ -12,9 +13,11 @@ import upload from "../multerConfig.js";
 const router = express.Router();
 
 router.get('/view/:fileName', viewImage);
+router.post('/upload', upload.single('file'), uploadImages);
+
 router.get('/images', getImages);
 router.get('/images/:id', getImagesById);
-router.post('/images', upload.single('file'), createImages);
+router.post('/images', createImages);
 router.patch('/images/:id', updateImages);
 router.delete('/images/:id', deleteImages);
 
